@@ -1,0 +1,59 @@
+﻿SDK Version : ESP8266_RTOS_SDK_V1.4.2_16_07_04
+Platform : ESP8266 Demo Board
+
+HOWTO:
+
+
+NO need to configure ssid and password of router
+These Drivers are only to configure the Peripheral Drivers.
+
+1. Copy the examples next to bin/ folder in the SDK folder. THe SDK folder should have folders inside it like : bin, examples, third party...
+
+2. Enter example folder, select the example you want to , run ./gen_misc.sh, and follow the tips and steps.
+
+3. If the SDK path is not updated in gen_misc.sh, right click the script and edit the path to bin folder and SDK folder. 
+for the current SDK, the gen_mish.sh would have a path like 
+export SDK_PATH="/home/esp8266/Share/ESP8266_RTOS_SDK_V1.4.2_16_07_04"
+
+export BIN_PATH="/home/esp8266/Share/ESP8266_RTOS_SDK_V1.4.2_16_07_04/bin"
+
+4. After executing, 
+Option 1 will be automatically selected, 
+Option 2 > Enter 1. 
+Option 3 > Enter Default(Just Press enter)
+Option 4 > Enter Default(Just Press enter)
+Option 5 > Enter 2.
+
+
+
+For example:
+    make COMPILE=gcc BOOT=new APP=1 SPI_SPEED=40 SPI_MODE=QIO SPI_SIZE_MAP=0
+
+5. Flash the Binaries with ESP Flashing tool at the instructed Locations. 
+
+	Download bin files to ESP-LAUNCHER as below sittings.
+
+	Download address of each bin files
+	blank.bin						0x1FE000
+	esp_init_data_default.bin				0x1FC000
+	boot_v1.6.bin						0x00000
+	user1.2048.new.5.bin					0x01000
+	
+	Flash download tool settings.
+	CrystalFreq: 26M
+	SPI SPEED: 40MHz
+	SPID MODE: QIO
+	FLASH SIZE: 16Mbit-C11
+
+FOR VERIFY: 
+6. Sample code written for i2c library to work with MPU6050. 
+PIN DEFINITION IS IN I2C_MASTER.H
+It passes the RAW values on UART0 port. Open Serial Monitor to verify.
+/*start MPU6050stop MPU6050
+Acx :65535
+Acy :65535
+Acz :65535
+Tem :65535
+Gyx :65535
+Gyy :65535
+Gyz :65535*/
