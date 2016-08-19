@@ -69,10 +69,9 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
-void soft_AP_Test()
+void soft_ap_test()
 {
-	soft_AP_Init();
+	soft_ap_init();
 	vTaskDelete(NULL);
 }
 
@@ -84,7 +83,6 @@ void soft_AP_Test()
 *******************************************************************************/
 void user_init(void)
 {      
-	printf("test new compile..\n");
-    xTaskCreate(soft_AP_Test,"conn_AP_test",500,NULL,6,NULL);
+    xTaskCreate(soft_ap_test,"soft_ap_test",500,NULL,6,NULL);
 }
 

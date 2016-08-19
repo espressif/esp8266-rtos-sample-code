@@ -153,7 +153,7 @@ LOCAL void
 uart_task(void *pvParameters)
 {
     os_event_t e;
-	char rcv_str[256];
+//	char rcv_str[256];
 
     for (;;) {
         if (xQueueReceive(xQueueUart, (void *)&e, (portTickType)portMAX_DELAY)) {

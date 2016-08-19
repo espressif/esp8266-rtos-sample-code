@@ -69,11 +69,9 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
 void sniffer_Test()
 {
-	sniffer_init();
-
+    sniffer_init();
 }
 
 /******************************************************************************
@@ -83,8 +81,7 @@ void sniffer_Test()
  * Returns      : none
 *******************************************************************************/
 void user_init(void)
-{      
-	printf("test new compile..\n");
-    xTaskCreate(sniffer_Test,"sniffer_Test",500,NULL,6,NULL);
+{
+    xTaskCreate(sniffer_Test, "sniffer_Test", 500, NULL, 6, NULL);
 }
 

@@ -69,4 +69,15 @@ struct sniffer_buf2{
     uint16 len; //length of packet
 };
 
+#define ETH_ALEN 6
+struct ieee80211_hdr {
+	u16 frame_control;
+	u16 duration_id;
+	u8 addr1[ETH_ALEN];
+	u8 addr2[ETH_ALEN];
+	u8 addr3[ETH_ALEN];
+	u16 seq_ctrl;
+};
+
 #endif
+

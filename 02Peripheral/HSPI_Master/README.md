@@ -1,20 +1,20 @@
 ##SDK Version : ESP8266_RTOS_SDK_V1.4.2_16_07_04
-##Platform : ESP-LAUNCHER BAOARD
+##Platform : ESP-LAUNCHER BOARD
 
 ##Operation Steps:
 
-1. Enter path:/home/esp8266/Share, clone ESP8266 RTOS SDK to lubuntu environment by command: 
+1.Enter path:/home/esp8266/Share, clone ESP8266 RTOS SDK to lubuntu environment by command: 
        
 		git clone https://github.com/espressif/ESP8266_RTOS_SDK.git 
 	   
-2. Enter SDK folder:/home/esp8266/Share/ESP8266_RTOS_SDK, Copy example folder "HSPI_Master" next to bin/ folder in the SDK folder. The SDK folder should have folders inside it like : bin, examples, third party...
+2.Enter SDK folder:/home/esp8266/Share/ESP8266_RTOS_SDK, Copy example folder "HSPI_Master" next to bin/ folder in the SDK folder. The SDK folder should have folders inside it like : bin, examples, third party...
 
 3. If the SDK path is not updated in gen_misc.sh, right click the script and edit the path to bin folder and SDK folder. for the current SDK, the gen_mish.sh would have a path like:
        
 		export SDK_PATH="/home/esp8266/Share/ESP8266_RTOS_SDK"
 		export BIN_PATH="/home/esp8266/Share/ESP8266_RTOS_SDK/bin"
 	   
-4. Enter example folder, run ./gen_misc.sh, and follow below steps to fininsh the sample code compile:
+4. Enter example folder, run ./gen_misc.sh, and follow below steps to finish the sample code compile:
 	
 		Option 1 will be automatically selected, 
 		Option 2 > Enter 1. 

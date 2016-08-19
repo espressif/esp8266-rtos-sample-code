@@ -25,7 +25,6 @@
 #include "esp_common.h"
 #include "gpio.h"
 
-
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
  * Description  : SDK just reversed 4 sectors, used for rf init data and paramters.
@@ -37,7 +36,7 @@
  *                C : sdk parameters
  * Parameters   : none
  * Returns      : rf cal sector
-*******************************************************************************/
+ *******************************************************************************/
 uint32 user_rf_cal_sector_set(void)
 {
     flash_size_map size_map = system_get_flash_size_map();
@@ -70,7 +69,6 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
 /**********************************SAMPLE CODE*****************************/
 #define ETS_GPIO_INTR_ENABLE()  _xt_isr_unmask(1 << ETS_GPIO_INUM)  //ENABLE INTERRUPTS
 #define ETS_GPIO_INTR_DISABLE() _xt_isr_mask(1 << ETS_GPIO_INUM)    //DISABLE INTERRUPTS
@@ -89,23 +87,23 @@ uint32 user_rf_cal_sector_set(void)
 
 void io_intr_handler(void)
 {
-	uint32 status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);          //READ STATUS OF INTERRUPT
+    uint32 status = GPIO_REG_READ(GPIO_STATUS_ADDRESS);          //READ STATUS OF INTERRUPT
     static uint8 val = 0;
-	if(status & BUTTON_IO_PIN ){
-		if(val == 0){
-			GPIO_OUTPUT_SET(LED_IO_NUM,1);
-			gpio16_output_set(0);
-			val = 1;
-		}else{
-			GPIO_OUTPUT_SET(LED_IO_NUM,0);
-			gpio16_output_set(1);
-			val = 0;
-		}
-	}
+    if (status & BUTTON_IO_PIN) {
+        if (val == 0) {
+            GPIO_OUTPUT_SET(LED_IO_NUM, 1);
+            gpio16_output_set(0);
+            val = 1;
+        } else {
+            GPIO_OUTPUT_SET(LED_IO_NUM, 0);
+            gpio16_output_set(1);
+            val = 0;
+        }
+    }
 
-	//should not add print in interruption, except that we want to debug something
+    //should not add print in interruption, except that we want to debug something
     //printf("in io intr: 0X%08x\r\n",status);                    //WRITE ON SERIAL UART0
-	GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS,status);       //CLEAR THE STATUS IN THE W1 INTERRUPT REGISTER
+    GPIO_REG_WRITE(GPIO_STATUS_W1TC_ADDRESS, status);       //CLEAR THE STATUS IN THE W1 INTERRUPT REGISTER
 
 }
 
@@ -114,44 +112,44 @@ void io_intr_handler(void)
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
-*******************************************************************************/
+ *******************************************************************************/
 void user_init(void)
-{      
-	printf("TEST TOGGLE ON GPIO15,YOU WILL SEE THE LED BLINKING ON IO15\n");
-	GPIO_ConfigTypeDef io_out_conf;
-	io_out_conf.GPIO_IntrType = GPIO_PIN_INTR_DISABLE;
-	io_out_conf.GPIO_Mode = GPIO_Mode_Output;
-	io_out_conf.GPIO_Pin = LED_IO_PIN ;
-	io_out_conf.GPIO_Pullup = GPIO_PullUp_DIS;
-	gpio_config(&io_out_conf);
+{
+    printf("TEST TOGGLE ON GPIO15,YOU WILL SEE THE LED BLINKING ON IO15\n");
+    GPIO_ConfigTypeDef io_out_conf;
+    io_out_conf.GPIO_IntrType = GPIO_PIN_INTR_DISABLE;
+    io_out_conf.GPIO_Mode = GPIO_Mode_Output;
+    io_out_conf.GPIO_Pin = LED_IO_PIN;
+    io_out_conf.GPIO_Pullup = GPIO_PullUp_DIS;
+    gpio_config(&io_out_conf);
 
-    GPIO_OUTPUT_SET(LED_IO_NUM,0);
-	gpio16_output_conf();
+    GPIO_OUTPUT_SET(LED_IO_NUM, 0);
+    gpio16_output_conf();
 
-	gpio16_output_set(0);
-	GPIO_OUTPUT_SET(LED_IO_NUM,1);
-	vTaskDelay(100);
-	gpio16_output_set(1);
-	GPIO_OUTPUT_SET(LED_IO_NUM,0);
-	vTaskDelay(100);
+    gpio16_output_set(0);
+    GPIO_OUTPUT_SET(LED_IO_NUM, 1);
+    vTaskDelay(100);
+    gpio16_output_set(1);
+    GPIO_OUTPUT_SET(LED_IO_NUM, 0);
+    vTaskDelay(100);
 
-	gpio16_output_set(0);
-	GPIO_OUTPUT_SET(LED_IO_NUM,1);
-	vTaskDelay(100);
-	gpio16_output_set(1);
-	GPIO_OUTPUT_SET(LED_IO_NUM,0);
-	vTaskDelay(100);
-	
+    gpio16_output_set(0);
+    GPIO_OUTPUT_SET(LED_IO_NUM, 1);
+    vTaskDelay(100);
+    gpio16_output_set(1);
+    GPIO_OUTPUT_SET(LED_IO_NUM, 0);
+    vTaskDelay(100);
+
     printf("SETUP GPIO13 INTERRUPT CONFIGURE..\r\n");
-	GPIO_ConfigTypeDef io_in_conf;
-	io_in_conf.GPIO_IntrType = GPIO_PIN_INTR_NEGEDGE;
-	io_in_conf.GPIO_Mode = GPIO_Mode_Input;
-	io_in_conf.GPIO_Pin = BUTTON_IO_PIN ;
-	io_in_conf.GPIO_Pullup = GPIO_PullUp_EN;
-	gpio_config(&io_in_conf);
+    GPIO_ConfigTypeDef io_in_conf;
+    io_in_conf.GPIO_IntrType = GPIO_PIN_INTR_NEGEDGE;
+    io_in_conf.GPIO_Mode = GPIO_Mode_Input;
+    io_in_conf.GPIO_Pin = BUTTON_IO_PIN;
+    io_in_conf.GPIO_Pullup = GPIO_PullUp_EN;
+    gpio_config(&io_in_conf);
 
     gpio_intr_handler_register(io_intr_handler, NULL);
     gpio16_output_set(1);
-	ETS_GPIO_INTR_ENABLE();
+    ETS_GPIO_INTR_ENABLE();
 }
 

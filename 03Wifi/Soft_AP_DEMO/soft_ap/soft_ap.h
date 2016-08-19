@@ -29,13 +29,7 @@
 extern "C" {
 #endif
 
-
-
-
-void conn_AP_Init(void);
-
-
-
+void conn_ap_init(void);
 
 #ifdef __cplusplus
 }

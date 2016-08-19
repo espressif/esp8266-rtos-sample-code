@@ -24,7 +24,6 @@
 
 #include "esp_common.h"
 
-
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
  * Description  : SDK just reversed 4 sectors, used for rf init data and paramters.
@@ -36,7 +35,7 @@
  *                C : sdk parameters
  * Parameters   : none
  * Returns      : rf cal sector
-*******************************************************************************/
+ *******************************************************************************/
 uint32 user_rf_cal_sector_set(void)
 {
     flash_size_map size_map = system_get_flash_size_map();
@@ -69,34 +68,31 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
 /**********************************OUR CODE*******************************************
-*How to Use this RTOS SDK example 
-uart_init_new(); Initalizes UART0 & UART1 of ESP8266 (You can change the Baud rates & Structure of the UART frame here)
-***UART1 only has a single Tx Pin. There is no Receiver at UART1
+ *How to Use this RTOS SDK example
 
-uart0_tx_buffer(str pointer, length); Sends the Data if the UART Ports are Initialized 
-Changes made in the Library : Changed the Interrupt Handler Function : uart0_rx_intr_handler for Receiving Data in data buffer 
+ uart_init_new(); Initalizes UART0 & UART1 of ESP8266 (You can change the Baud rates & Structure of the UART frame here)
+ ***UART1 only has a single Tx Pin. There is no Receiver at UART1
 
-*************************************************************************************/
+ uart0_tx_buffer(str pointer, length); Sends the Data if the UART Ports are Initialized
+ Changes made in the Library : Changed the Interrupt Handler Function : uart0_rx_intr_handler for Receiving Data in data buffer
+
+ *************************************************************************************/
 
 #include "uart.h"
-
-
 
 /******************************************************************************
  * FunctionName : user_init
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
-*******************************************************************************/
+ *******************************************************************************/
 void user_init(void)
 {
-	printf("THIS IS A UART LOOPBACK DEMO...\n");
-	uart_init_new();    //UART0 Initialize
-   
-    while(1){
-        uint8 alpha= 'A';
+    printf("THIS IS A UART LOOPBACK DEMO...\n");
+    uart_init_new();    //UART0 Initialize
+    while (1) {
+        uint8 alpha = 'A';
         char* test_str = "Your String Here\r\n";
         uart0_tx_buffer(&alpha, sizeof(alpha));
         uart0_tx_buffer(test_str, strlen(test_str));

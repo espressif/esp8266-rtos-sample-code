@@ -11,8 +11,8 @@ export BIN_PATH=~/esp8266_bin
 #export SDK_PATH=$ESP8266_RTOS_SDK_PATH
 #export BIN_PATH=$ESP8266_RTOS_BIN_PATH
 
-export SDK_PATH=/home/esp8266/Share/ESP8266_RTOS_SDK
-export BIN_PATH=/home/esp8266/Share/ESP8266_RTOS_SDK/bin
+export SDK_PATH=/home/esp8266/Share/tcpservice/UART0/ESP8266_RTOS_SDK
+export BIN_PATH=/home/esp8266/Share/test-out
 
 echo "gen_misc.sh version 20150911"
 echo ""

@@ -70,9 +70,9 @@ uint32 user_rf_cal_sector_set(void)
 }
 
 
-void scan_AP_Test()
+void scan_ap_test()
 {
-	scan_AP_Init();
+	scan_ap_init();
 	vTaskDelete(NULL);
 }
 
@@ -85,6 +85,6 @@ void scan_AP_Test()
 void user_init(void)
 {      
 	printf("RUN SCAN AP TEST.\n");
-    xTaskCreate(scan_AP_Test,"scan_AP_Test",500,NULL,6,NULL);
+    xTaskCreate(scan_ap_test,"scan_AP_Test",500,NULL,6,NULL);
 }
 

@@ -23,8 +23,6 @@
  */
 
 #include "esp_common.h"
-
-
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
  * Description  : SDK just reversed 4 sectors, used for rf init data and paramters.
@@ -65,19 +63,14 @@ uint32 user_rf_cal_sector_set(void)
             rf_cal_sec = 0;
             break;
     }
-
     return rf_cal_sec;
 }
 
-
 void TcpLocalClient_Test()
 {
-	
-	conn_AP_Init();
+	conn_ap_init();
 	vTaskDelay(1000);
 	TcpLocalClient();
-	
-
 }
 
 /******************************************************************************
@@ -88,7 +81,7 @@ void TcpLocalClient_Test()
 *******************************************************************************/
 void user_init(void)
 {      
-	printf("test new compile..\n");
+	espconn_init();
     xTaskCreate(TcpLocalClient_Test,"TcpLocalClient_Test",500,NULL,6,NULL);
 }
 

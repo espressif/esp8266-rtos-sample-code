@@ -24,7 +24,6 @@
 
 #include "esp_common.h"
 
-
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
  * Description  : SDK just reversed 4 sectors, used for rf init data and paramters.
@@ -36,7 +35,7 @@
  *                C : sdk parameters
  * Parameters   : none
  * Returns      : rf cal sector
-*******************************************************************************/
+ *******************************************************************************/
 uint32 user_rf_cal_sector_set(void)
 {
     flash_size_map size_map = system_get_flash_size_map();
@@ -69,15 +68,11 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
 void udpServer_Test()
 {
-	
-	conn_AP_Init();
-	vTaskDelay(1000);
-	udpServer();
-	
-
+    conn_ap_init();
+    vTaskDelay(1000);
+    udpServer();
 }
 
 /******************************************************************************
@@ -85,10 +80,10 @@ void udpServer_Test()
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
-*******************************************************************************/
+ *******************************************************************************/
 void user_init(void)
-{      
-	printf("test new compile..\n");
-    xTaskCreate(udpServer_Test,"udpServer_Test",500,NULL,6,NULL);
+{
+    printf("test new compile..\n");
+    xTaskCreate(udpServer_Test, "udpServer_Test", 500, NULL, 6, NULL);
 }
 

@@ -24,7 +24,42 @@
  */
 
 #include "esp_common.h"
+#include "gpio.h"
+#include "i2c_master.h"
 
+#define mpu6050 0x68
+
+uint8 Acknowledge;
+uint8 pData[14];
+uint8 count;
+
+uint16 Acx;
+uint8 Accelerometer_X1;
+uint8 Accelerometer_X2;
+
+uint16 Acy;
+uint8 Accelerometer_Y1;
+uint8 Accelerometer_Y2;
+
+uint16 Acz;
+uint8 Accelerometer_Z1;
+uint8 Accelerometer_Z2;
+
+uint16 Tem;
+uint8 Temperature_1;
+uint8 Temperature_2;
+
+uint16 Gyx;
+uint8 Gyroscope_X1;
+uint8 Gyroscope_X2;
+
+uint16 Gyy;
+uint8 Gyroscope_Y1;
+uint8 Gyroscope_Y2;
+	
+uint16 Gyz;
+uint8 Gyroscope_Z1;
+uint8 Gyroscope_Z2;
 
 /******************************************************************************
  * FunctionName : user_rf_cal_sector_set
@@ -70,128 +105,87 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
-/**********************************OUR CODE*****************************/
-
-#include "gpio.h"
-#include "i2c_master.h"
-
-
-#define mpu6050 0x68
-uint8 Acknowledge;
-uint8 pData[14];
-uint8 count;
-
-uint16 Acx;
-uint8 Accelerometer_X1;
-uint8 Accelerometer_X2;
-
-uint16 Acy;
-uint8 Accelerometer_Y1;
-uint8 Accelerometer_Y2;
-
-uint16 Acz;
-uint8 Accelerometer_Z1;
-uint8 Accelerometer_Z2;
-
-uint16 Tem;
-uint8 Temperature_1;
-uint8 Temperature_2;
-
-uint16 Gyx;
-uint8 Gyroscope_X1;
-uint8 Gyroscope_X2;
-
-uint16 Gyy;
-uint8 Gyroscope_Y1;
-uint8 Gyroscope_Y2;
-	
-uint16 Gyz;
-uint8 Gyroscope_Z1;
-uint8 Gyroscope_Z2;
-
-
 void i2c_test_task()
 {
 
-	i2c_master_gpio_init();
-	i2c_master_start();  //Start
+    i2c_master_gpio_init();
+    i2c_master_start();
 
-	i2c_master_writeByte(mpu6050<<1 | 0);  //7 bit Address + LSB=0 for write command
-	Acknowledge = i2c_master_getAck();
+    //7 bit Address + LSB=0 for write command
+    i2c_master_writeByte(mpu6050 << 1 | 0);
+    Acknowledge = i2c_master_getAck();
 
-	i2c_master_writeByte(0x6B);  //Power Mode
-	Acknowledge = i2c_master_getAck();
+    //Power Mode
+    i2c_master_writeByte(0x6B);
+    Acknowledge = i2c_master_getAck();
 
-	i2c_master_writeByte(0x00);  //On MPU6050
-	Acknowledge = i2c_master_getAck();
+    //On MPU6050
+    i2c_master_writeByte(0x00);
+    Acknowledge = i2c_master_getAck();
 
-	i2c_master_stop();
-	i2c_master_start();
+    i2c_master_stop();
+    i2c_master_start();
 
-	while(1)
-	{
-		i2c_master_writeByte(0x68<<1 | 0);
-		Acknowledge = i2c_master_getAck();
+    while (1) {
+        i2c_master_writeByte(0x68 << 1 | 0);
+        Acknowledge = i2c_master_getAck();
+        i2c_master_writeByte(0x3B);
+        Acknowledge = i2c_master_getAck();
+        i2c_master_start();
+        i2c_master_writeByte(0x68 << 1 | 1);
+        Acknowledge = i2c_master_getAck();
 
-		i2c_master_writeByte(0x3B);
-		Acknowledge = i2c_master_getAck();
+        printf("start MPU6050");
+        Accelerometer_X1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Accelerometer_X2 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Accelerometer_Y1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Accelerometer_Y2 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Accelerometer_Z1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Accelerometer_Z2 = i2c_master_readByte();
+        i2c_master_setAck(0);
 
-		i2c_master_start();
-		i2c_master_writeByte(0x68<<1 | 1);
-		Acknowledge = i2c_master_getAck();
+        Temperature_1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Temperature_2 = i2c_master_readByte();
+        i2c_master_setAck(0);
 
-		printf("start MPU6050");
-		Accelerometer_X1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Accelerometer_X2 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Accelerometer_Y1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Accelerometer_Y2 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Accelerometer_Z1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Accelerometer_Z2 = i2c_master_readByte();
-		i2c_master_setAck(0);
+        Gyroscope_X1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Gyroscope_X2 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Gyroscope_Y1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Gyroscope_Y2 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Gyroscope_Z1 = i2c_master_readByte();
+        i2c_master_setAck(0);
+        Gyroscope_Z2 = i2c_master_readByte();
+        i2c_master_setAck(1);
+        Acx = Accelerometer_X1 << 8 | Accelerometer_X2;
+        Acy = Accelerometer_Y1 << 8 | Accelerometer_Y2;
+        Acz = Accelerometer_Z1 << 8 | Accelerometer_Z2;
 
-		Temperature_1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Temperature_2 = i2c_master_readByte();
-		i2c_master_setAck(0);
+        Tem = Temperature_1 << 8 | Temperature_2;
+        Gyx = Gyroscope_X1 << 8 | Gyroscope_X2;
+        Gyy = Gyroscope_Y1 << 8 | Gyroscope_Y2;
+        Gyz = Gyroscope_Z1 << 8 | Gyroscope_Z2;
 
-		Gyroscope_X1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Gyroscope_X2 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Gyroscope_Y1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Gyroscope_Y2 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Gyroscope_Z1 = i2c_master_readByte();
-		i2c_master_setAck(0);
-		Gyroscope_Z2 = i2c_master_readByte();
-		i2c_master_setAck(1);
-		Acx = Accelerometer_X1<<8 | Accelerometer_X2;
-		Acy = Accelerometer_Y1<<8 | Accelerometer_Y2;
-		Acz = Accelerometer_Z1<<8 | Accelerometer_Z2;
-
-		Tem = Temperature_1<<8 | Temperature_2;
-		Gyx = Gyroscope_X1<<8 | Gyroscope_X2;
-		Gyy = Gyroscope_Y1<<8 | Gyroscope_Y2;
-		Gyz = Gyroscope_Z1<<8 | Gyroscope_Z2;
-
-		printf("stop MPU6050\n");
-		printf("Acx :%d\n", Acx);
-		printf("Acy :%d\n", Acy);
-		printf("Acz :%d\n", Acz);
-		printf("Tem :%d\n", Tem);
-		printf("Gyx :%d\n", Gyx);
-		printf("Gyy :%d\n", Gyy);
-		printf("Gyz :%d\n", Gyz);
-		vTaskDelay(200);  //Delay for 200milli seconds
-	}
-	while(1);
+        printf("stop MPU6050\n");
+        printf("Acx :%d\n", Acx);
+        printf("Acy :%d\n", Acy);
+        printf("Acz :%d\n", Acz);
+        printf("Tem :%d\n", Tem);
+        printf("Gyx :%d\n", Gyx);
+        printf("Gyy :%d\n", Gyy);
+        printf("Gyz :%d\n", Gyz);
+        vTaskDelay(200);  //Delay for 200milli seconds
+    }
+    vTaskDelete(NULL);
 }
 
 /******************************************************************************

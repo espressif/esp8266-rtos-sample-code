@@ -38,10 +38,9 @@ void user_init(void)
     printf("ADC TEST");
 
     //Connect to TOUT Pin(Voltage Range between 0~1V)
-    while(1)
-        {
-          uint16 adc_read=  system_adc_read();
-          printf("%d\n", adc_read);
-          vTaskDelay(20);    //Read every 200milli Sec
-        }
+    while (1) {
+        uint16 adc_read = system_adc_read();
+        printf("%d\n", adc_read);
+        vTaskDelay(20);    //Read every 200milli Sec
+    }
 }

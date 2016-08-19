@@ -69,11 +69,10 @@ uint32 user_rf_cal_sector_set(void)
     return rf_cal_sec;
 }
 
-
-void conn_AP_test()
+void conn_ap_test()
 {
-	conn_AP_Init();
-	vTaskDelete(NULL);
+    conn_ap_init();
+    vTaskDelete(NULL);
 }
 
 /******************************************************************************
@@ -81,10 +80,10 @@ void conn_AP_test()
  * Description  : entry of user application, init user function here
  * Parameters   : none
  * Returns      : none
-*******************************************************************************/
+ *******************************************************************************/
 void user_init(void)
-{      
-	printf("test new compile..\n");
-    xTaskCreate(conn_AP_test,"conn_AP_test",500,NULL,6,NULL);
+{
+    printf("test new compile..\n");
+    xTaskCreate(conn_ap_test, "conn_AP_test", 500, NULL, 6, NULL);
 }
 

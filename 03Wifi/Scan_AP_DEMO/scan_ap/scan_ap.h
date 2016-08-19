@@ -6,13 +6,7 @@
 extern "C" {
 #endif
 
-
-
-
-void scan_AP_Init(void);
-
-
-
+void scan_ap_init(void);
 
 #ifdef __cplusplus
 }

@@ -68,16 +68,11 @@ uint32 user_rf_cal_sector_set(void)
 
     return rf_cal_sec;
 }
-
-
 void TCP_Server_Test()
 {
-	
-	conn_AP_Init();
-	vTaskDelay(1000);
-	TcpLocalServer();
-	
-
+    conn_ap_init();
+    vTaskDelay(1000);
+    TcpLocalServer();
 }
 
 /******************************************************************************
@@ -87,9 +82,9 @@ void TCP_Server_Test()
  * Returns      : none
 *******************************************************************************/
 void user_init(void)
-{      
-	printf("test new compile..\n");
-	printf("Please get the RTOS version of SDK.%s\n", system_get_sdk_version());
-    xTaskCreate(TCP_Server_Test,"TCP_Server_Test",500,NULL,6,NULL);
+{
+    printf("Please get the RTOS version of SDK.%s\n", system_get_sdk_version());
+    espconn_init();
+    xTaskCreate(TCP_Server_Test, "TCP_Server_Test", 500, NULL, 6, NULL);
 }
 
