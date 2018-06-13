@@ -24,11 +24,11 @@
 
 #ifndef __GPIO_H__
 #define __GPIO_H__
-#include "esp8266/eagle_soc.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include "esp8266/gpio_register.h"
 #define GPIO_Pin_0              (BIT(0))  /* Pin 0 selected */
 #define GPIO_Pin_1              (BIT(1))  /* Pin 1 selected */
 #define GPIO_Pin_2              (BIT(2))  /* Pin 2 selected */
@@ -190,10 +190,10 @@ typedef struct {
   *  
   * @return  the level of GPIO input 
   */
-#define GPIO_INPUT_GET(gpio_no)     ((gpio_input_get()>>gpio_no)&BIT0)
+#define GPIO_INPUT_GET(gpio_no)     ((gpio_input_get()>>gpio_no)&BIT(0))
 
 /**  
-  * @brief   Enable GPIO16 output. 
+  * @brief   Enable GPIO16 output.
   * 
   * @param   null
   *  
@@ -303,7 +303,5 @@ uint32 gpio_input_get(void);
 #ifdef __cplusplus
 }
 #endif
-#define ETS_GPIO_INTR_ENABLE()  _xt_isr_unmask(1 << ETS_GPIO_INUM)  //ENABLE INTERRUPTS
-#define ETS_GPIO_INTR_DISABLE() _xt_isr_mask(1 << ETS_GPIO_INUM)    //DISABLE INTERRUPTS
 
 #endif

@@ -81,6 +81,13 @@ uint32 user_rf_cal_sector_set(void)
 
 #include "uart.h"
 
+void uart0_tx_buffer(char *string, char len){
+    while(len > 0){
+        uart0_write_char(*string++);
+        len--;
+    }
+}
+
 /******************************************************************************
  * FunctionName : user_init
  * Description  : entry of user application, init user function here

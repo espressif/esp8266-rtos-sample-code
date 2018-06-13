@@ -108,7 +108,7 @@ typedef enum
     SpiBitOrder_LSBFirst = 1,
 } SpiBitOrder;
 
-// @brief SPI interrupt source defined.
+// @brief SPI interrupt soource defined.
 typedef enum
 {
     SpiIntSrc_TransDoneEn = SPI_TRANS_DONE_EN,

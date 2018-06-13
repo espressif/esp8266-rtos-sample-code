@@ -124,6 +124,14 @@ typedef struct {
   * @{
   */
 
+/** \defgroup UART_Driver_APIs UART Driver APIs
+  * @brief UART driver APIs
+  */
+
+/** @addtogroup UART_Driver_APIs
+  * @{
+  */
+
 /**  
   * @brief   Wait uart tx fifo empty, do not use it if tx flow control enabled.
   * 
@@ -270,6 +278,9 @@ void UART_SetLineInverse(UART_Port uart_no, UART_LineLevelInverse inverse_mask) 
   * @return  null
   */
 void uart_init_new(void);
+
+ void
+uart0_write_char(char c);
 
 /**
   * @}
