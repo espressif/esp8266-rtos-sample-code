@@ -11,7 +11,7 @@ IR sender and receiver function test.
 git clone https://github.com/espressif/ESP8266_RTOS_SDK.git 
 ```
 	   
-2. Enter SDK folder: `/home/esp8266/Share/ESP8266_RTOS_SDK`, Copy example folder `Infrared` next to `bin/` folder in the SDK folder. The SDK folder should have folders inside it like : `bin`, `examples`, third party...
+2. Enter SDK folder: `/home/esp8266/Share/ESP8266_RTOS_SDK`, Copy example folder `Infrared` next to `bin/` folder in the SDK folder. The SDK folder should have folders inside it like : `bin`, `examples`, `third party`...
 
 3. If the SDK path is not updated in gen_misc.sh, right click the script and edit the path to bin folder and SDK folder. for the current SDK, the gen_mish.sh would have a path like:
        
